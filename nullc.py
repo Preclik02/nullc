@@ -1,64 +1,39 @@
 import os
 import re
 
-# Token-based keyword mapping
 sifra_dict = {
-    "auto": "auto",
-    "break": "break",
-    "case": "case",
-    "char": "char",
-    "const": "const",
-    "continue": "continue",
-    "default": "default",
-    "do": "do",
-    "double": "double",
-    "else": "else",
-    "enum": "enum",
-    "extern": "extern",
-    "float": "float",
-    "for": "for",
-    "goto": "goto",
-    "if": "if",
-    "inline": "inline",
-    "int": "int",
-    "long": "long",
-    "register": "register",
-    "restrict": "restrict",
-    "return": "return",
-    "short": "short",
-    "signed": "signed",
-    "sizeof": "sizeof",
-    "static": "static",
-    "struct": "struct",
-    "switch": "switch",
-    "typedef": "typedef",
-    "union": "union",
-    "unsigned": "unsigned",
-    "void": "void",
-    "volatile": "volatile",
-    "while": "while",
-    "include": "include",
-    "main": "main",
-    "#include": "#include",
-    "#def": "#define",
-    "def": "define",
-    "in": "scanf",
-
-    # Custom language features
-    "out": "printf",        # allows `out("Hello");`
-    "string": "snprintf"    # can define your own behavior
+    "auto": "auto", "break": "break", "case": "case", "char": "char",
+    "const": "const", "continue": "continue", "default": "default",
+    "do": "do", "double": "double", "else": "else", "enum": "enum",
+    "extern": "extern", "float": "float", "for": "for", "goto": "goto",
+    "if": "if", "inline": "inline", "int": "int", "long": "long",
+    "register": "register", "restrict": "restrict", "return": "return",
+    "short": "short", "signed": "signed", "sizeof": "sizeof",
+    "static": "static", "struct": "struct", "switch": "switch",
+    "typedef": "typedef", "union": "union", "unsigned": "unsigned",
+    "void": "void", "volatile": "volatile", "while": "while",
+    "out": "printf", "in": "scanf", "def": "define",
+    "string": "snprintf", "sys": "system"
 }
 
-def replace_tokens(code):
-    for sifra, word in sifra_dict.items():
-        # Replace whole words only (no part of another identifier)
-        code = re.sub(rf'\b{re.escape(sifra)}\b', word, code)
-    return code
+def replace_tokens(line: str) -> str:
+    for token, replacement in sifra_dict.items():
+        line = re.sub(rf'\b{re.escape(token)}\b', replacement, line)
+    return line
+
+def process_code(code: str) -> str:
+    result_lines = []
+    for line in code.splitlines():
+        if line.strip().startswith("#include"):
+            result_lines.append(line)
+        else:
+            new_line = replace_tokens(line)
+            result_lines.append(new_line)
+    return "\n".join(result_lines)
 
 def main():
-    x = input("Filename (without .nc): ").strip()
-
-    in_file = x + ".nc"
+    filename = input("Filename (without .nc): ").strip()
+    in_file = filename + ".nc"
     out_dir = os.path.expanduser("~/.nullc")
     os.makedirs(out_dir, exist_ok=True)
 
@@ -69,16 +44,14 @@ def main():
     with open(in_file, "r") as f:
         code = f.read()
 
-    translated = replace_tokens(code)
+    translated = process_code(code)
 
-    out_c_file = "program.c"
-    with open(out_c_file, "w") as f:
+    with open("program.c", "w") as f:
         f.write(translated)
 
     with open(os.path.join(out_dir, "filenames.txt"), "w") as f:
-        f.write(x)
+        f.write(filename)
 
 
 if __name__ == "__main__":
     main()
-
