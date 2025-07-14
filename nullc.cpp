@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
     
-    system("python3 nullc.py");
+    system("python3 ~/.nullc/nullc.py");
 
     string path = "~/.nullc/filenames.txt";
 
