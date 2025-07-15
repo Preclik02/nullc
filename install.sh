@@ -7,10 +7,12 @@ if [ "$distro" = "debian" ]; then
 	echo "installing packages via apt"
 	sudo apt update
 	sudo apt -y install gcc g++
+  sudo apt -y install python3
 elif [ "$distro" = "arch" ]; then
 	echo "installing packages via pacman"
 	sudo pacman -Syu --noconfirm
 	sudo pacman -S --noconfirm gcc g++
+  sudo pacman -S --noconfirm python3
 else
 	echo "wrong input"
 fi
