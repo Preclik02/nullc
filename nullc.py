@@ -13,7 +13,8 @@ sifra_dict = {
     "typedef": "typedef", "union": "union", "unsigned": "unsigned",
     "void": "void", "volatile": "volatile", "while": "while",
     "out": "printf", "in": "scanf", "def": "define",
-    "string": "snprintf", "sys": "system"
+    "string": "snprintf", "sys": "system", "fout": "fprintf",
+    "fin": "fscanf"
 }
 
 def replace_tokens(line: str) -> str:
