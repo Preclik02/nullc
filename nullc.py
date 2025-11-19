@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 
 sifra_dict = {
     "auto": "auto", "break": "break", "case": "case", "char": "char",
@@ -33,7 +34,10 @@ def process_code(code: str) -> str:
     return "\n".join(result_lines)
 
 def main():
-    filename = input("Filename (without .nc): ").strip()
+    if len(sys.argv) < 2:
+        print("Usage: nullc.py <filename>")
+        sys.exit(1)
+    filename = sys.argv[1].strip()
     in_file = filename + ".nc"
     out_dir = os.path.expanduser("~/.nullc")
     os.makedirs(out_dir, exist_ok=True)
