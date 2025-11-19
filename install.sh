@@ -24,7 +24,7 @@ echo "cloning repo"
 git clone https://www.github.com/Preclik02/nullc ~/.nullc
 
 echo "compiling the cpp file via g++"
-g++ ~/.nullc/nullc.cpp -o ~/.nullc/nullc
+gcc ~/.nullc/nullc.c -o ~/.nullc/nullc
 chmod +x ~/.nullc/install.sh
 
 echo "what terminal do you use? (bash, zsh)"
