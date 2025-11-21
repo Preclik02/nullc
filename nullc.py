@@ -38,7 +38,7 @@ def main():
         print("Usage: nullc.py <filename>")
         sys.exit(1)
     filename = sys.argv[1].strip()
-    in_file = filename + ".nc"
+    in_file = filename
     out_dir = os.path.expanduser("~/.nullc")
     os.makedirs(out_dir, exist_ok=True)
 

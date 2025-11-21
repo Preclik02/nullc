@@ -10,7 +10,6 @@ int main(int argc, char* argv[]) {
   char command1[512];
 
   if (argc > 0) {
-    printf("\n[+] I hope you named the filename without .nc it will not work when you do the full name\n\n");
     snprintf(filename, sizeof(filename), "%s", argv[1]);
   }
   else {
