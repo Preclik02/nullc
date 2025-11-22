@@ -17,8 +17,8 @@ sifra_dict = {
     "string": "snprintf", "sys": "system", "fout": "fprintf",
     "fin": "fscanf"
 }
-
 def replace_tokens(line: str) -> str:
+
     for token, replacement in sifra_dict.items():
         line = re.sub(rf'\b{re.escape(token)}\b', replacement, line)
     return line
@@ -32,32 +32,24 @@ def process_code(code: str) -> str:
             new_line = replace_tokens(line)
             result_lines.append(new_line)
     return "\n".join(result_lines)
-
 def main():
     if len(sys.argv) < 2:
         print("Usage: nullc.py <filename>")
         sys.exit(1)
     filename = sys.argv[1].strip()
-    in_file = filename
+    in_file = filename + ".nc"
     out_dir = os.path.expanduser("~/.nullc")
     os.makedirs(out_dir, exist_ok=True)
-
     if not os.path.exists(in_file):
         print(f"❌ File '{in_file}' not found.")
         return
-
     with open(in_file, "r") as f:
         code = f.read()
-
     translated = process_code(code)
-
     with open("program.c", "w") as f:
         f.write(translated)
-
     with open(os.path.join(out_dir, "filenames.txt"), "w") as f:
         f.write(filename)
-
-
 if __name__ == "__main__":
-    main()
 
+    main()
